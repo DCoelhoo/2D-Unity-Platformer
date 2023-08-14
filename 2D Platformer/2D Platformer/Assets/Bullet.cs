@@ -13,6 +13,17 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.right * speed;
     }
 
+    private void Update()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (screenPos.x < 0 || screenPos.x > Screen.width ||
+            screenPos.y < 0 || screenPos.y > Screen.height)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyController enemy = collision.GetComponent<EnemyController>();
