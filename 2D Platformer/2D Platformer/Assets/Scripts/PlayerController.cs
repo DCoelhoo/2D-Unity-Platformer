@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 8f;
     public float jumpForce = 16f;
     private bool isFacingRight = true;
+    public RespawnPoint respawnPoint;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -48,11 +49,22 @@ public class PlayerController : MonoBehaviour
         if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            transform.Rotate(0f, 180f, 0f);
         }
 
 
+    }
+
+    public void Die()
+    {
+        respawnPoint.RespawnPlayer(transform);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Border")
+        {
+            Die();
+        }
     }
 }
