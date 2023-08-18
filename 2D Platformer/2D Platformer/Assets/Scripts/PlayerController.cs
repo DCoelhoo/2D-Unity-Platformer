@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 16f;
     private bool isFacingRight = true;
     public RespawnPoint respawnPoint;
+    public GameController gameController;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -58,6 +59,8 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         respawnPoint.RespawnPlayer(transform);
+        gameController.RespawnEnemies();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,6 +68,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Border")
         {
             Die();
+        }
+
+        if (collision.gameObject.tag == "Coins" || collision.gameObject.tag == "Key")
+        {
+            Destroy(collision.gameObject);
         }
     }
 }

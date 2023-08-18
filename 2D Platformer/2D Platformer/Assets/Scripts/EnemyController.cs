@@ -13,12 +13,16 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public int health = 10;
     public PlayerController player;
+    public int maxHealth;
+    private Vector2 initialPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = pointB.transform;
+        initialPosition = transform.position;
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -73,14 +77,24 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
+    public void Respawn()
+    {
+        transform.position = initialPosition;
+        health = maxHealth;
+        gameObject.SetActive(true);
+    }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
             player.Die();
+
         }
 
     }
