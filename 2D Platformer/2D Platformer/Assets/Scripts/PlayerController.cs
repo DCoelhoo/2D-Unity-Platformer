@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight = true;
     public RespawnPoint respawnPoint;
     public GameController gameController;
+    public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -21,9 +22,13 @@ public class PlayerController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
 
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        
+
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            animator.SetBool("isJumping", true);
         }
 
         //Jump higher if pressing longer
@@ -42,7 +47,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
+        
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        
     }
 
     private void Flip()
