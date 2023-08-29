@@ -4,18 +4,36 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+
+    public List<Sprite> sprites;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && GameController.gameController != null)
         {
-            if (GameController.gameController != null)
+
+            bool checkKey = GameController.gameController.checkKey();
+
+            if (checkKey == true)
             {
-                GameController.gameController.checkKey();
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Debug.Log("Level Finished");
+                }
             }
-            else
-            {
-                Debug.LogWarning("GameController is not initialized.");
-            }
+
+
         }
+        else
+        {
+            Debug.LogWarning("GameController is not initialized.");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[0];
     }
 }

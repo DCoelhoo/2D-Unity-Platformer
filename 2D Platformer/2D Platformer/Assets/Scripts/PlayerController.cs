@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            animator.SetBool("isJumping", true);
         }
 
         //Jump higher if pressing longer

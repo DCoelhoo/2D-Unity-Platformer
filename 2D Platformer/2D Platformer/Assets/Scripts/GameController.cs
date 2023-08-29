@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public List<EnemyController> enemies;
     public bool hasKey = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour
     public void IncreaseCoins(int value)
     {
         score += value;
-        textCoins.text = "Coins:" + value.ToString();
+        textCoins.text = "Coins:" + score.ToString();
     }
 
     public void RespawnEnemies()
@@ -44,15 +45,15 @@ public class GameController : MonoBehaviour
         hasKey = true;
     }
 
-    public void checkKey()
+    public bool checkKey()
     {
         if (hasKey)
         {
-            Debug.Log("Door Opened");
+            return true;
         }
         else
         {
-            Debug.Log("Precisas da Key");
+            return false;
         }
     }
 }
