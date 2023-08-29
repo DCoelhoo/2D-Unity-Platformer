@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-
+    bool canFinish = false;
     public List<Sprite> sprites;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canFinish == true)
+        {
+            Debug.Log("Level Finished");
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,13 +25,9 @@ public class Door : MonoBehaviour
             if (checkKey == true)
             {
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
+                canFinish = true;
 
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Debug.Log("Level Finished");
-                }
             }
-
 
         }
         else
@@ -35,5 +39,6 @@ public class Door : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        canFinish = false;
     }
 }
